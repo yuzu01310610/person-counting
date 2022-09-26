@@ -1,22 +1,37 @@
 import firebase_admin
 from firebase_admin import credentials
 from firebase_admin import db
+import time
+import datetime
 
 
-cred = credentials.Certificate("./firebase_key/personcount-29e8c-firebase-adminsdk-gyj3h-8ccb136f18.json")
-firebase_admin.initialize_app(cred,{
-    'databaseURL':'https://personcount-29e8c-default-rtdb.firebaseio.com/',
-    'databaseAuthVariableOverride':{
-        'uid': 'my-service-worker'
-    }
-})
-
-quiz_ref = db.reference('questions')
-quiz_ref.child('question001').set({
-        'sentence': 'This () a pen',
-        'a': 'are',
-        'b': 'is',
-        'c': 'were',
-        'd': 'was',
-        'answer': 'b'
+def upload_firebase(person_number):
+    cred = credentials.Certificate("./firebase_key/personcount-29e8c-firebase-adminsdk-gyj3h-8ccb136f18.json")
+    
+    firebase_admin.initialize_app(cred,{
+        'databaseURL':'https://personcount-29e8c-default-rtdb.firebaseio.com/',
     })
+
+    dt_now = datetime.datetime.now()
+    print(dt_now)
+    quiz_ref = db.reference('/user')
+
+    quiz_ref.child('1').update({
+            'conf': "123",
+            'date': dt_now.strftime('%Y年%m月%d日 %H:%M:%S'),
+            'total': person_number,
+        })
+
+    return
+
+def counting_person(check_num):
+
+    global p_num
+
+    check_num = int(check_num[0])
+
+    if check_num >= 0:
+        print("OK!")
+        upload_firebase(check_num)
+
+    return
