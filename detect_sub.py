@@ -45,7 +45,7 @@ from utils.general import (LOGGER, Profile, check_file, check_img_size, check_im
                            increment_path, non_max_suppression, print_args, scale_coords, strip_optimizer, xyxy2xywh)
 from utils.plots import Annotator, colors, save_one_box
 from utils.torch_utils import select_device, smart_inference_mode
-
+import firebase
 
 @smart_inference_mode()
 def run(
@@ -156,7 +156,7 @@ def run(
                     n = (det[:, 5] == c).sum()  # detections per class
                     s += f"{n} {names[int(c)]}{'s' * (n > 1)}, "  # add to string
                     check_num = f"{n} {names[int(c)]}{'s' * (n > 1)}, "
-                    print(check_num[0])
+                    firebase.counting_person(check_num)
                     
 
                 # Write results
