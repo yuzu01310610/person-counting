@@ -29,9 +29,9 @@ def counting_person(check_num):
     global p_num
 
     check_num = int(check_num[0])
-
-    if check_num >= 0:
-        print("OK!")
-        upload_firebase(check_num)
+    upload_firebase(check_num)
+    # if check_num >= 0:
+    #     print("OK!")
+    #     upload_firebase(check_num)
 
     return
