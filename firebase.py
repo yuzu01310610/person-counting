@@ -27,14 +27,15 @@ def upload_firebase(person_number):
 
 def counting_person(check_num):
 
-    global p_num
-
     check_num = int(check_num[0])
     upload_firebase(check_num)
-    print(check_num)
-    time.sleep(10)
-    # if check_num >= 0:
     #     print("OK!")
     #     upload_firebase(check_num)
+
+    return
+
+def no_counting_person(check_num):
+
+    upload_firebase(check_num)
 
     return
