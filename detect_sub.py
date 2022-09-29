@@ -46,6 +46,7 @@ from utils.general import (LOGGER, Profile, check_file, check_img_size, check_im
 from utils.plots import Annotator, colors, save_one_box
 from utils.torch_utils import select_device, smart_inference_mode
 import firebase
+import time
 
 @smart_inference_mode()
 def run(
@@ -110,6 +111,7 @@ def run(
     model.warmup(imgsz=(1 if pt else bs, 3, *imgsz))  # warmup
     seen, windows, dt = 0, [], (Profile(), Profile(), Profile())
     while True:
+        time.sleep(10)
         for path, im, im0s, vid_cap, s in dataset:
             with dt[0]:
                 im = torch.from_numpy(im).to(device)
@@ -155,6 +157,7 @@ def run(
                         n = (det[:, 5] == c).sum()  # detections per class
                         s += f"{n} {names[int(c)]}{'s' * (n > 1)}, "  # add to string
                         check_num = f"{n} {names[int(c)]}{'s' * (n > 1)}, "
+                        print(check_num)
                         firebase.counting_person(check_num)
                         
 
@@ -172,7 +175,9 @@ def run(
                             annotator.box_label(xyxy, label, color=colors(c, True))
                         if save_crop:
                             save_one_box(xyxy, imc, file=save_dir / 'crops' / names[c] / f'{p.stem}.jpg', BGR=True)
-
+                else:
+                    check_num = 0
+                    firebase.no_counting_person(check_num)
                 # Stream results
                 im0 = annotator.result()
                 if view_img:
