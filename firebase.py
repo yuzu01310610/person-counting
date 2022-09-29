@@ -6,11 +6,13 @@ import datetime
 
 
 def upload_firebase(person_number):
-    cred = credentials.Certificate("./firebase_key/personcount-29e8c-firebase-adminsdk-gyj3h-8ccb136f18.json")
+    #cred = credentials.Certificate("./firebase_key/personcount-29e8c-firebase-adminsdk-gyj3h-8ccb136f18.json")
     
-    firebase_admin.initialize_app(cred,{
-        'databaseURL':'https://personcount-29e8c-default-rtdb.firebaseio.com/',
-    })
+    if not firebase_admin._apps:
+        cred = credentials.Certificate("./firebase_key/personcount-29e8c-firebase-adminsdk-gyj3h-8ccb136f18.json")
+        firebase_admin.initialize_app(cred,{
+            'databaseURL':'https://personcount-29e8c-default-rtdb.firebaseio.com/',
+        })
 
     dt_now = datetime.datetime.now()
     print(dt_now)
@@ -30,6 +32,8 @@ def counting_person(check_num):
 
     check_num = int(check_num[0])
     upload_firebase(check_num)
+    print(check_num)
+    time.sleep(10)
     # if check_num >= 0:
     #     print("OK!")
     #     upload_firebase(check_num)
