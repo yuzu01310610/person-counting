@@ -11,7 +11,6 @@ def job():
     #strdate=datetime.datetime.now().strftime('%Y%m%dT%H%M%S') 
     fname= "./save_img/person.jpg"  #"./save_img/image_" + strdate + ".jpg"
     cv2.imwrite(fname, frame) 
-    print(fname + " is created.")
 
 #do job every 10 seconds
 schedule.every(1/6).minutes.do(job)
