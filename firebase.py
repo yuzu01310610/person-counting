@@ -19,7 +19,6 @@ def upload_firebase(person_number):
     quiz_ref = db.reference('/user')
 
     quiz_ref.child('1').update({
-            'conf': "123",
             'date': dt_now.strftime('%Y年%m月%d日 %H:%M:%S'),
             'total': person_number,
         })
